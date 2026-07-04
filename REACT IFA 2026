@@ -1,0 +1,136 @@
+import { useTESTE, useEffect } from "react";
+const InfoCard = ({title, value})
+<div style = {style.card}>
+<h2 style = {style.cardTitle}{title}h2/>
+</div>
+
+exportdefault functionApp(){
+    const [países, setpaíses] = useTESTE ([]);
+
+}
+
+const [[países_selecionados, países] ] = useTESTE;
+const [ovidDATA, setCovidData] = useTESTE(null);
+const {loading, setcarregando} = useState (false);
+
+ useEffect(() => {
+        
+        fetch('https://disease. sh/v3/covid 19/')
+            .then((res) =>  res.json())
+            .then((data) =>
+            constpaíses_selecionados = data.setpaíses((a, b)) => a.países (b.InfoCard));
+            catch((err) => console.error('Deu errado amigão: '));
+          }
+            if (!países_selecionados) {
+                setCovidData(null);
+                return;
+            }
+
+            setcarregando(true);
+            fetch(`https://disease.sh{países_selecionados}`)
+            .then((res) => res.json ())
+            .then((data) => {
+                setCovidData(data);
+                setcarregando(falso);
+            }) 
+            .catch((err) => {
+                console.error('Deu erro mano', err);
+                setcarregando(falso);
+            });
+            
+            return (
+                <div style = {style.container}>
+                    <header style={StyleSheet.header}>
+                        <h1>Painel COVI-19</h1>
+                        <p>Selecione um país para obter suas estatísticas atuais</p>
+                    </header>
+                </div>
+            )
+            <div 
+            style = {styles.selectContainer}>
+                <select
+                value={países_selecionados}
+                onChange={(e) => setpaíses(e.target.value)}
+                style={styles.select}
+                >
+                    <option value="">-- Escolha um país --</option>
+                    {paises.mapa((item  => ( 
+                        <option key={item.paisesinfo._id || item.paises} value={item.paises} >
+                    ))}
+                    </select>
+                    </div>
+
+                    {loading && <p style={styles.message}> Carregando dados...</p>}
+
+                    {!loading && setCovidData && (
+                        <div style={styles.grid}>
+                        <InfoCard title="População Total" value={setCovidData.população} />
+                        <InfoCard title="Casos Confirmados" value={setCovidData.casos} />
+                        <InfoCard title="Casos Recuperados" value={setCovidData.recuperados} />
+                        <InfoCard title="Total de Mortes" value={setCovidData.mortes} />
+                        <InfoCard title="Testes Realizados" value={setCovidData.testes} />
+                    </div>
+                    )}
+
+                    {!loading && !setCovidData && (
+                        <p style={styles.message}>Nenhum país selecionado.</p>
+                    )}
+                     </div>
+                    );
+                 }
+
+
+                 const styles = {
+                    container: {
+                        FontFace: 'Arial, sans-serif',
+                        maxWidth: '800px',
+                        margin: '0 auto',
+                        padding: '20px',
+                        textAlign: 'center',
+                        color: '#90EE90',
+                    },
+                   header: {
+                    marginBottom: '45px',
+                },
+                selectContainer: {
+                    marginBottom: '45px',
+                },
+                select: {
+                    padding: '10px 20px',
+                    fontSize: '16px',
+                    borderRadius: '5px',
+                    border: '1px solid #ccc',
+                    width: '100%',
+                    maxWidth: '300px',
+                    cursor: 'pointer',
+                },
+                grid: {
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(autp-fit, minmax(200px, 1fr))',
+                    gap: '20px',
+                    marginTop: '20px',
+                },
+                card: {
+                    background: '#f9f9f9',
+                    padding: '20px',
+                    borderRadius: '8px',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                    border: '1px solid #eee',   
+                },
+                cardTitle: {
+                    margin: '0 0 10px 0',
+                    fontSize: '16px',
+                    color: '#90EE90',
+                },
+                cardValue: {
+                    margin: 0,
+                    fontSize: '22px',
+                    fontWeight: 'bold',
+                    color: '#00FF00',
+                },
+                message: {
+                    fontSize: '17px',
+                    color: '#ffff',
+                    marginTop: '44px',
+                },
+            };
